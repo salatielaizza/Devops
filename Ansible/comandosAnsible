@@ -1,0 +1,5 @@
+
+ansible wordpress -i hosts -u vagrant --private-key ssh-keys/vagrant_id_rsa -m ping -m shell -a 'echo Hello, World'
+
+#saída mais verbosa
+ansible vvvv wordpress -i hosts -u vagrant --private-key ssh-keys/vagrant_id_rsa -m ping -m shell -a 'echo Hello, World'
