@@ -1,0 +1,74 @@
+Ansible
+
+AULA 01: PRIMEIRO PASSOS
+
+Vamos criar uma Máquina Virtual com o Vagrant que possua o Wordpress e Virtualbox 
+com o sistema operacional Ubuntu. Tudo isto a partit da Máquina de Controle com 
+o Ansible. 
+
+baixamos a última versão do vagrant:
+sudo apt install vagrant
+
+também baixamos o virtualbox6.0
+
+criamos um arquivo VagrantFile com as configurações para baixar o ubuntu e fazer 
+sua instalação, além da configuração para instalação do wordpress e virtualbox na 
+MV.  Também definimos o host no arquivo de inventário chamado hosts com enfereço 
+IP que vamos logar na máquina virtual (MV) e o nome do grupo como "[wordpress]".
+
+/**
+Também tivemos que criar uma diretório para as chaves ssh-keys com o mesmo nome. 
+Lá foram geradas as chaves pública/privada e exportada a chave pública para ser
+ utilizada no diretório principal do Ansible pelo vagrant com o comando: 
+$ssh-copy-id -i vagrant_id_rsa.pub vagrant@172.17.177.40
+para criação das chaves ssh, foi utilizado o comando:
+$ssh-keygen -t rsa
+foi selecionado um diretório para salvar os arquivos criados e solicitado um 
+nome para este arquivo. Que foi "vagrant_id_rsa" e com a senha "vagrant".
+**/
+
+o principal comando do vagrant para criar a máquina virtual é:
+$vagrant up
+e o comando $vagrant ssh entra na máquina virtual criada.
+
+primeiro comando do Ansible:
+$ansible -vvvv wordpress -u vagrant --private-key .vagrant/machines/wordpress/virtualbox/private_key -i hosts -m shell -a 'echo Hello, World'
+-u: user vagrant
+-i: inventario criado
+-m: modulos que o ansible é capaz de rodar
+-a: passar os parâmetros
+--private-key: evita que tenhamos que colocar a senha toda vez que rodarmos a MV.
+
+AULA 02: CRIAÇÃO DE PLAYBOOK
+
+Pretendemos instalar o PHP, MySQL e Apache para rodar o Wordpress na MV. E vamos 
+automatizar isto no Ansible.
+Para automatizar esta instalação criamos um arquivo chamado provisioning.yml. 
+Trata-se de uma extensão derivada dos dicionários de PYTHON, que será detalhada a
+seguir:
+
+Sempre iniciamos com três traços
+o elemento de primeiro nível é uma lista que começa com "hosts" que serão 
+filtrados;
+utilizamos a campo "tasks" que lista os comandos aplicados nos hosts filtrados 
+anteriormente.
+após é escolhido um módulo aleatório para ser executado pelo Ansible, que é o  
+"shell": 
+
+- hosts: all
+  tasks: 
+   - shell: 'echo hello > /vagrant/world.txt'
+
+para rodar o script provisioning.yml acima devemos usar o comando 
+ansible-playbook e especificar o usuário "u vagrant", o inventário "i hosts" , a 
+chave privada de autentificação "--private-key 
+.vagrant/machines/wordpress/virtualbox/private_key", ficando o comando completo 
+assim:
+$ansible-playbook provisioning.yml -u vagrant -i hosts --private-key .vagrant/machines/wordpress/virtualbox/private_key 
+
+
+
+
+
+
+

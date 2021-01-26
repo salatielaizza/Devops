@@ -2,4 +2,8 @@
 ansible wordpress -i hosts -u vagrant --private-key ssh-keys/vagrant_id_rsa -m ping -m shell -a 'echo Hello, World'
 
 #saída mais verbosa
-ansible vvvv wordpress -i hosts -u vagrant --private-key ssh-keys/vagrant_id_rsa -m ping -m shell -a 'echo Hello, World'
+ansible -vvvv wordpress -i hosts -u vagrant --private-key 
+.vagrant/machines/wordpress/virtualbox/private_key -m ping -m shell -a 'echo Hello, World'
+
+#criação de playbook
+$ ansible-playbook provisioning.yml -u vagrant -i hosts --private-key .vagrant/machines/wordpress/virtualbox/private_key 

@@ -1,0 +1,22 @@
+Grade do Treinamento
+
+Introdução
+Yaml, o que são, do que se alimentam?
+Entendendo a arquitetura do Ansible
+Instalando e configurando o Ansible
+Utilizando o Ansible para comandos Ad-Hoc
+Entendendo e criando nossos primeiros Playbooks
+Variaveis e facts
+Inventário
+Módulos
+Entendendo e controlando nossas tasks
+Roles
+Jinga2 e templates
+Deploying nossa primeira app usando Ansible
+Ansible Vault
+Playbook deep dive
+AWX
+Troubleshoot
+Utilizando Ansible na AWS ou Azure
+Utilizando Ansible e Docker
+Utilizando Ansible e Kubernetes
